@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+      "target": "es2015",
+      "outDir": "./dist",
+      "experimentalDecorators": true,
+      "sourceMap":true,
+      "emitDecoratorMetadata": true,
+      "module": "commonjs",
+      "moduleResolution": "node",
+      "baseUrl": ".",
+      "paths": {
+        "*": [
+          "*",
+          "./node_modules/*",
+          "./*"
+        ]
+      }
+    },
+    "exclude": [
+      "node_modules"
+    ]
+  }

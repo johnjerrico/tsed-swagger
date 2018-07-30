@@ -3,14 +3,14 @@ import {deepExtends, nameOf, Store} from "@tsed/core";
 import * as Express from "express";
 import * as Fs from "fs";
 import * as PathUtils from "path";
+import * as swagger_ui from "swagger-ui-dist";
 import {Schema, Spec, Tag} from "swagger-schema-official";
 import {$log} from "ts-log-debug";
 import {OpenApiEndpointBuilder} from "../class/OpenApiEndpointBuilder";
 import {ISwaggerPaths, ISwaggerSettings} from "../interfaces";
 import {getReducers} from "../utils";
 
-const swaggerUiPath = require("swagger-ui-dist").absolutePath();
-const ejs = require("ejs");
+const swaggerUiPath = swagger_ui.absolutePath();
 
 @Service()
 export class SwaggerService {
@@ -112,15 +112,15 @@ export class SwaggerService {
    */
   private middlewareIndex(scope: any) {
     /* istanbul ignore next */
-    return (req: any, res: any) =>
-      ejs.renderFile(__dirname + "/../views/index.ejs", scope, {}, (err: any, str: string) => {
-        if (err) {
-          $log.error(err);
-          res.status(500).send(err.message);
-        } else {
-          res.send(str);
-        }
-      });
+    return async (req: any, res: any) => {
+      try {
+        const template = await import("views/index.ejs");
+        res.send(template());
+      } catch (err) {
+        $log.error(err);
+        res.status(500).send(err.message);
+      }
+    }
   }
 
   /**
