@@ -115,7 +115,7 @@ export class SwaggerService {
     return async (req: any, res: any) => {
       try {
         const template = await import("views/index.ejs");
-        res.send(template());
+        res.send(template(scope));
       } catch (err) {
         $log.error(err);
         res.status(500).send(err.message);
